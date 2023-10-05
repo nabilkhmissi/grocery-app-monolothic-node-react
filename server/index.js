@@ -5,12 +5,13 @@ const cors = require("cors");
 const errorHandler = require("./middlewares/error-handler")
 
 const { customerRoute, productRoute } = require("./routes")
+const authCheck = require("./middlewares/auth")
 
 app.use(express.json());
 app.use(cors());
 
 
-app.use("/customer", customerRoute);
+app.use("/customer", authCheck, customerRoute);
 app.use("/products", productRoute);
 app.use(errorHandler)
 

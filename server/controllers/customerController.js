@@ -1,5 +1,6 @@
 const { CustomerModel } = require("../models")
 const password_utility = require("../utility/password-utility");
+const { generate_signature } = require("../utility/jwt")
 
 const findAll = async (req, res) => {
     const customers = await CustomerModel.find({});
@@ -133,8 +134,10 @@ const login = async (req, res, next) => {
         res.status(403).send({ message: "invalid credentials" })
         return;
     }
+    const { _id, name, mail } = customer;
+    const signature = generate_signature({ _id, name, mail });
 
-    res.status(200).send({ message: "logged in succesfully", data: customer })
+    res.status(200).send({ message: "logged in succesfully", data: signature })
 }
 
 module.exports = {
