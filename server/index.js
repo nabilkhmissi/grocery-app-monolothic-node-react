@@ -4,13 +4,14 @@ require("./db/DBconnect")
 const cors = require("cors");
 const errorHandler = require("./middlewares/error-handler")
 
-const { customerRoute } = require("./routes")
+const { customerRoute, productRoute } = require("./routes")
 
 app.use(express.json());
 app.use(cors());
 
 
-app.use("/customer", customerRoute)
+app.use("/customer", customerRoute);
+app.use("/products", productRoute);
 app.use(errorHandler)
 
 app.listen(3000, () => {

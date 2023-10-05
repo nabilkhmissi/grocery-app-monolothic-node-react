@@ -35,6 +35,10 @@ const findById = async (req, res, next) => {
     const id = req.params.id;
     try {
         const customer = await CustomerModel.findById(id);
+        if (!customer) {
+            res.status(404).send({ message: "customer with this id not found" });
+            return;
+        }
         res.status(200).send(customer)
     } catch (error) {
         const err = new Error("user with this id not found");

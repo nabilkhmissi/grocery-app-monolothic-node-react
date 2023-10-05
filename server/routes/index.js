@@ -1,3 +1,4 @@
 module.exports = {
-    customerRoute: require("./custmer")
+    customerRoute: require("./custmer"),
+    productRoute: require("./product"),
 }
