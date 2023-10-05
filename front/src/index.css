@@ -102,3 +102,10 @@ input {
     flex-direction: column;
     padding: 1rem;
 }
+
+.hero {
+    background-image: url("../public/images/eco-friendly-reusable-shopping-bag-260nw-590746682.webp");
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
