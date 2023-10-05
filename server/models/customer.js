@@ -7,13 +7,13 @@ const CustomerSchema = new Schema(
         name: { type: String, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
-        salt: { type: String, required: true }
-        /* cart: [
+        salt: { type: String, required: true },
+        cart: [
             {
                 product: { type: Schema.Types.ObjectId, ref: 'product', require: true },
                 unit: { type: Number, require: true }
             }
-        ],
+        ],/*
         wishlist: [
             {
                 type: Schema.Types.ObjectId, ref: 'product', require: true

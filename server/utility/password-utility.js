@@ -8,6 +8,11 @@ const hashPassword = async (password, salt) => {
     return await bcrypt.hash(password, salt)
 }
 
+
+const validatePassword = async (entered_password, hashed_password, salt) => {
+    return await hashPassword(entered_password, salt) === hashed_password;
+}
+
 module.exports = {
-    genSalt, hashPassword
+    genSalt, hashPassword, validatePassword
 }
