@@ -31,6 +31,9 @@ const CustomerSchema = new Schema(
 CustomerSchema.methods.toJSON = function () {
     var obj = this.toObject();
     delete obj.password;
+    delete obj.salt
+    delete obj.createdAt
+    delete obj.updatedAt
     delete obj.__v
     return obj;
 }
