@@ -11,7 +11,7 @@ const CustomerSchema = new Schema(
         cart: [
             {
                 product: { type: Schema.Types.ObjectId, ref: 'product', require: true },
-                unit: { type: Number, require: true }
+                quantity: { type: Number, require: true }
             }
         ],/*
         wishlist: [
