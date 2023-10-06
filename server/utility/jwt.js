@@ -5,7 +5,6 @@ const generate_signature = (payload) => {
     return signature;
 }
 
-
 const validate_token = async (token) => {
     try {
         const isValid = jwt.verify(token, 'JWT_SECRET');
@@ -15,4 +14,12 @@ const validate_token = async (token) => {
     }
 }
 
-module.exports = { generate_signature, validate_token }
+const decodeToken = (token) => {
+    return jwt.decode(token)
+}
+
+module.exports = {
+    generate_signature,
+    validate_token,
+    decodeToken
+}

@@ -1,36 +1,13 @@
 const { CustomerModel } = require("../models")
-const password_utility = require("../utility/password-utility");
-const { generate_signature } = require("../utility/jwt")
 
 const findAll = async (req, res) => {
+    const user = req.user;
+
     const customers = await CustomerModel.find({});
     res.status(200).send({ message: "customers retrieved successfully", data: customers })
 }
 
-const createCustomer = async (req, res) => {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-        res.status(400).send({ message: "invalid customer details" })
-        return;
-    }
 
-    const existCustomer = await CustomerModel.findOne({ email: email });
-    if (existCustomer) {
-        res.status(400).send({ message: "this email is already in use" })
-        return;
-    }
-
-    const salt = await password_utility.genSalt();
-    const userPassword = await password_utility.hashPassword(password, salt)
-
-    const new_customer = await CustomerModel.create({
-        name,
-        email,
-        password: userPassword,
-        salt: salt
-    });
-    res.status(200).send(new_customer)
-}
 const findById = async (req, res, next) => {
     const id = req.params.id;
     try {
@@ -44,6 +21,22 @@ const findById = async (req, res, next) => {
         const err = new Error("user with this id not found");
         err.status = 404;
         next(err)
+    }
+}
+
+
+const findByEmail = async (email) => {
+    try {
+        const customer = await CustomerModel.findOne({ email: email });
+        if (!customer) {
+            res.status(404).send({ message: "customer with this email not found" });
+            return;
+        }
+        return customer;
+    } catch (error) {
+        const err = new Error("user with this email not found");
+        err.status = 404;
+        throw err;
     }
 }
 
@@ -119,34 +112,18 @@ const findCart = async (req, res, next) => {
 
 }
 
-const login = async (req, res, next) => {
-    const { email, password } = req.body;
-    const customer = await CustomerModel.findOne({ email: email });
-    console.log(customer)
-
-    if (!customer) {
-        res.status(404).send({ message: "customer with this id not found" });
-        return;
-    }
-
-    const isValidPassword = await password_utility.validatePassword(password, customer.password, customer.salt);
-    if (!isValidPassword) {
-        res.status(403).send({ message: "invalid credentials" })
-        return;
-    }
-    const { _id, name, mail } = customer;
-    const signature = generate_signature({ _id, name, mail });
-
-    res.status(200).send({ message: "logged in succesfully", data: signature })
+const createCustomer = async (customer) => {
+    return await CustomerModel.create(customer);
 }
+
 
 module.exports = {
     findAll,
     findById,
-    createCustomer,
     deleteById,
     updateCustomer,
     findCart,
     addToCart,
-    login
+    findByEmail,
+    createCustomer
 }
