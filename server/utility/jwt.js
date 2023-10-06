@@ -5,12 +5,13 @@ const generate_signature = (payload) => {
     return signature;
 }
 
-const validate_token = async (token) => {
+const validate_token = (token) => {
     try {
         const isValid = jwt.verify(token, 'JWT_SECRET');
         return isValid ? true : false
+
     } catch (error) {
-        throw new Error("error happened")
+        throw error
     }
 }
 

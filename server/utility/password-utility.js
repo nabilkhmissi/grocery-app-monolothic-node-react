@@ -11,6 +11,7 @@ const hashPassword = async (password, salt) => {
 
 const validatePassword = async (entered_password, hashed_password, salt) => {
     return await hashPassword(entered_password, salt) === hashed_password;
+
 }
 
 module.exports = {
