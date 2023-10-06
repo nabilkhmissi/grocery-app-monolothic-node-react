@@ -8,6 +8,7 @@ router.get("/:id", customerController.findById);
 router.delete("/:id", customerController.deleteById);
 router.get("/:id/cart", customerController.findCart);
 router.post("/cart", customerController.addToCart);
+router.get("/:id/orders", customerController.findOrders);
 
 
 module.exports = router

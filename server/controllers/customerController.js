@@ -55,6 +55,19 @@ const updateCustomer = async (req, res, next) => {
         next(err)
     }
 }
+const createCustomer = async (customer) => {
+    try {
+        const customer = CustomerModel.findOne({ email: email });
+        if (customer) {
+            throw new Error("Customer with this email already exist")
+        }
+        const created_customer = await CustomerModel.create(customer);
+        res.status(200).send({ message: "customer created successfully", data: created_customer })
+    } catch (error) {
+        next(error)
+    }
+}
+//cart
 const findCart = async (req, res, next) => {
     const id = req.params.id;
     try {
@@ -66,19 +79,6 @@ const findCart = async (req, res, next) => {
 
         res.status(200).send({ message: "cart retrieved successfully", cart: cart });
 
-    } catch (error) {
-        next(error)
-    }
-
-}
-const createCustomer = async (customer) => {
-    try {
-        const customer = CustomerModel.findOne({ email: email });
-        if (customer) {
-            throw new Error("Customer with this email already exist")
-        }
-        const created_customer = await CustomerModel.create(customer);
-        res.status(200).send({ message: "customer created successfully", data: created_customer })
     } catch (error) {
         next(error)
     }
@@ -107,9 +107,6 @@ const addToCart = async (req, res, next) => {
                     }
                 }
             })
-            if (!exist) {
-                cart.push(cartItem)
-            }
         }
 
         customer.cart = cart;
@@ -123,6 +120,22 @@ const addToCart = async (req, res, next) => {
 
 }
 
+//order
+const findOrders = async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        const customer = await CustomerModel.findById(id).populate("orders");
+        if (!customer) {
+            throw new ApiError("custmer with this id not found", 404)
+        }
+        let orders = customer.orders;
+
+        res.status(200).send({ message: "orders retrieved successfully", orders: orders });
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 module.exports = {
     findAll,
@@ -131,5 +144,6 @@ module.exports = {
     updateCustomer,
     findCart,
     addToCart,
-    createCustomer
+    createCustomer,
+    findOrders
 }

@@ -1,20 +1,16 @@
 const express = require("express");
 const app = express();
-require("./db/DBconnect")
 const cors = require("cors");
 const errorHandler = require("./middlewares/error-handler")
+const expressApp = require("./services/expressApp")
+const connectDB = require("./services/db.service")
 
-const { customerRoute, productRoute, authRoute } = require("./routes")
-const authCheck = require("./middlewares/auth")
-
+connectDB();
 app.use(express.json());
 app.use(cors());
-
-
-app.use("/customer", authCheck, customerRoute);
-app.use("/products", productRoute);
-app.use("/auth", authRoute);
+expressApp(app)
 app.use(errorHandler)
+
 
 app.listen(3000, () => {
     console.clear();

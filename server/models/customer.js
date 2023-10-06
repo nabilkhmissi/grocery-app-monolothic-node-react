@@ -18,10 +18,10 @@ const CustomerSchema = new Schema(
             {
                 type: Schema.Types.ObjectId, ref: 'product', require: true
             }
-        ],
+        ],*/
         orders: [
             { type: Schema.Types.ObjectId, ref: 'order', require: true }
-        ] */
+        ]
     },
     {
         timestamps: true
