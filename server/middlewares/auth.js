@@ -1,5 +1,5 @@
+const { CustomerModel } = require("../models");
 const { validate_token, decodeToken } = require("../utility/jwt");
-const { customerRepo } = require("../repositories")
 
 module.exports = async function authCheck(req, res, next) {
     try {
@@ -15,7 +15,7 @@ module.exports = async function authCheck(req, res, next) {
         }
 
         const payload = decodeToken(jwt);
-        const user = await customerRepo.findByEmail(payload.email);
+        const user = await CustomerModel.findOne({ email: payload.email });
         req.user = user;
         next()
     } catch (error) {

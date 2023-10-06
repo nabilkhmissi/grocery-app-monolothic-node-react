@@ -1,16 +1,14 @@
 const { CustomerModel } = require("../models")
-const { customerRepo } = require("../repositories");
-const UnAuthorizedError = require("../errors/UnAuthorizedError");
-const EntityNotFoundError = require("../errors/entity_not_found");
-const EntityNotValidError = require("../errors/entity_not_valid");
+const ApiError = require("../errors/ApiError");
+
 
 const findAll = async (req, res, next) => {
     try {
         const user = req.user;
         if (!user) {
-            throw new UnAuthorizedError()
+            throw new ApiError("Not authorized", 403)
         }
-        const customers = await customerRepo.findAll();
+        const customers = await CustomerModel.find({});
         res.status(200).send({ message: "customers retrieved successfully", data: customers })
     } catch (error) {
         next(error)
@@ -20,9 +18,9 @@ const findAll = async (req, res, next) => {
 const findById = async (req, res, next) => {
     const id = req.params.id;
     try {
-        const customer = await customerRepo.findById(id);
+        const customer = await CustomerModel.findById(id);
         if (!customer) {
-            throw new EntityNotFoundError();
+            throw new ApiError("customer with this id not found", 404);
         }
         res.status(200).send(customer)
     } catch (error) {
@@ -33,11 +31,13 @@ const findById = async (req, res, next) => {
 const deleteById = async (req, res, next) => {
     const id = req.params.id;
     try {
-        await customerRepo.deleteById(id);
+        const customer = CustomerModel.findById(id);
+        if (!customer) {
+            throw new ApiError("custmer with this id not found", 404)
+        }
+        await CustomerModel.deleteById(id);
         res.status(200).send({ message: "customer deleted successfully" })
     } catch (error) {
-        const err = new Error("error happened while deleting customer")
-        err.status = 500;
         next(err)
     }
 }
@@ -45,11 +45,11 @@ const updateCustomer = async (req, res, next) => {
     const id = req.params.id;
     const newCustomer = req.body;
     try {
-        const customer = await customerRepo.findById(id);
+        const customer = await CustomerModel.findById(id);
         if (!customer) {
-            throw new EntityNotFoundError();
+            throw new ApiError("custmer with this id not found", 404)
         }
-        const updatedUser = await customerRepo.update(id, newCustomer);
+        const updatedUser = await CustomerModel.updateOne({ _id: id }, newCustomer);
         res.status(200).send({ message: "customer updated successfully", data: updatedUser })
     } catch (error) {
         next(err)
@@ -82,11 +82,11 @@ const addToCart = async (req, res, next) => {
 const findCart = async (req, res, next) => {
     const id = req.params.id;
     try {
-        const customer = await customerRepo.findById(id);
+        const customer = await CustomerModel.findById(id).populate("cart");
         if (!customer) {
-            throw new EntityNotFoundError();
+            throw new ApiError("custmer with this id not found", 404)
         }
-        let cart = await customerRepo.findCart();
+        let cart = customer.cart;
 
         res.status(200).send({ message: "cart retrieved successfully", cart: cart });
 
@@ -97,11 +97,11 @@ const findCart = async (req, res, next) => {
 }
 const createCustomer = async (customer) => {
     try {
-        const customer = customerRepo.findByEmail(email);
+        const customer = CustomerModel.findOne({ email: email });
         if (customer) {
             throw new Error("Customer with this email already exist")
         }
-        const created_customer = await customerRepo.create(customer);
+        const created_customer = await CustomerModel.create(customer);
         res.status(200).send({ message: "customer created successfully", data: created_customer })
     } catch (error) {
         next(error)

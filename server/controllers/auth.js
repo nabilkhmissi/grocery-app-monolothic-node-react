@@ -1,11 +1,11 @@
-const { customerRepo } = require("../repositories")
 const { generate_signature } = require("../utility/jwt")
-const password_utility = require("../utility/password-utility")
+const password_utility = require("../utility/password-utility");
+const { CustomerModel } = require("../models")
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
     try {
-        const customer = await customerRepo.findByEmail(email);
+        const customer = await CustomerModel.findOne({ email: email });
         if (!customer) {
             throw new Error("Customer with this email not found")
         }
@@ -19,7 +19,6 @@ const login = async (req, res, next) => {
 
         res.status(200).send({ message: "authenticated succesfully", data: signature })
     } catch (error) {
-        console.log("error is catched")
         next(error)
     }
 }
@@ -30,7 +29,7 @@ const signup = async (req, res) => {
         throw new Error("Invalid creadentials")
     }
 
-    const existCustomer = await customerRepo.findByEmail(email);
+    const existCustomer = await CustomerModel.findOne({ email });
     if (existCustomer) {
         throw new Error("Invalid credentials")
     }
