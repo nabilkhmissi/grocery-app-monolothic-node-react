@@ -107,12 +107,15 @@ const addToCart = async (req, res, next) => {
                     }
                 }
             })
+            if (!exist) {
+                cart.push({ product, quantity: qty })
+            }
         }
 
         customer.cart = cart;
-        const updated_customer = await customer.save()
+        await customer.save();
 
-        res.status(200).send({ message: "cart updated successfully", cart: updated_customer.cart });
+        res.status(200).send({ message: "cart updated successfully" });
 
     } catch (error) {
         next(error)

@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 18px;
+    transition: all .2s ease-out;
 }
 
 body {
@@ -41,6 +42,7 @@ a {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.063);
     position: sticky;
     top: 0;
+    z-index: 99;
 }
 
 .nav-links {
@@ -112,6 +114,31 @@ input {
     flex-direction: column;
     padding: 1rem;
     justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card:hover .product-overlay {
+    display: flex;
+    translate: 0 0;
+}
+
+.product-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(1, 1, 1, 0.251);
+    translate: 0 100%;
+}
+
+.product-overlay button {
+    background-color: white;
+    padding: 1rem;
 }
 
 .product-image {
@@ -143,4 +170,19 @@ input {
     padding: 1rem;
     border: 1px solid black;
     margin-bottom: 1rem;
+}
+
+.header-cart {
+    position: relative;
+}
+
+.cart-count {
+    padding: 0.3rem;
+    background-color: red;
+    border-radius: 1rem;
+    color: white;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 15px;
 }
