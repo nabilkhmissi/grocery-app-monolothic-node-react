@@ -4,6 +4,7 @@ import AppContext from "../context/auth.context";
 import { useEffect, useState } from "react";
 import CartContext from "../context/cart.context";
 import { loadCart } from "../services/customer.service";
+import CartBar from "../components/cart-bar";
 
 export default function Layout() {
     const [authUser, setAuthUser] = useState(null);
@@ -26,10 +27,17 @@ export default function Layout() {
         setCart(cart)
     }
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    function handleCartBar() {
+        setIsOpen(!isOpen)
+    }
+
     return (
         <AppContext.Provider value={{ authUser, setAuthUser }}>
             <CartContext.Provider value={{ cart, setCart }}>
-                <Header />
+                <CartBar isOpen={isOpen} />
+                <Header handleCartBar={handleCartBar} />
                 <Outlet />
             </CartContext.Provider>
         </AppContext.Provider>

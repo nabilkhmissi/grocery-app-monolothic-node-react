@@ -186,3 +186,30 @@ input {
     right: -10px;
     font-size: 15px;
 }
+
+.cart-bar {
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    z-index: 98;
+    height: 100%;
+    /*  translate: 100% 0; */
+}
+
+.cart-bar ul {
+    list-style-type: none;
+    overflow-y: scroll;
+}
+
+.cart-bar li {
+    padding: 1rem;
+    border-bottom: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

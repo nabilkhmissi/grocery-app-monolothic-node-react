@@ -3,16 +3,17 @@ import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../context/auth.context";
 import CartContext from "../context/cart.context";
 
-export default function Header() {
+export default function Header({ handleCartBar }) {
 
     const { authUser, setAuthUser } = useContext(AuthContext);
-    const { cart, setCart } = useContext(CartContext)
+    const { cart, setCart } = useContext(CartContext);
 
     const navigate = useNavigate();
     function handleLogout() {
         setAuthUser(null)
         localStorage.removeItem("grocery_app_user")
     }
+
     return (
         <div className="header">
             <h1>Grocery Store</h1>
@@ -27,7 +28,7 @@ export default function Header() {
                 </>
                 }
                 {authUser && <button onClick={() => navigate('/profile')}>Auth user</button>}
-                <button className="header-cart">Cart <span className="cart-count">{cart.length}</span></button>
+                <button onClick={handleCartBar} className="header-cart">Cart <span className="cart-count">{cart.length}</span></button>
 
                 {authUser && <button onClick={handleLogout}>Logout</button>}
             </div>

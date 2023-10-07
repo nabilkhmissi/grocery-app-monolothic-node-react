@@ -71,7 +71,7 @@ const createCustomer = async (customer) => {
 const findCart = async (req, res, next) => {
     const id = req.params.id;
     try {
-        const customer = await CustomerModel.findById(id).populate("cart");
+        const customer = await CustomerModel.findById(id).populate("cart.product");
         if (!customer) {
             throw new ApiError("custmer with this id not found", 404)
         }
