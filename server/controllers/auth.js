@@ -19,6 +19,7 @@ const login = async (req, res, next) => {
 
         res.status(200).send({ message: "authenticated succesfully", data: signature })
     } catch (error) {
+        console.log(error)
         next(error)
     }
 }
@@ -36,13 +37,13 @@ const signup = async (req, res) => {
     const salt = await password_utility.genSalt();
     const userPassword = await password_utility.hashPassword(password, salt)
 
-    const new_customer = await customerRepo.create({
+    const new_customer = await CustomerModel.create({
         name,
         email,
         password: userPassword,
         salt: salt
     });
-    res.status(200).send(new_customer)
+    res.status(200).send({ data: "Account created successfully" })
 }
 
 

@@ -7,6 +7,7 @@ const ProductSchema = new Schema(
     {
         name: String,
         desc: String,
+        image: String,
         unit: Number,
         price: Number,
         available: Boolean,
@@ -20,6 +21,8 @@ const ProductSchema = new Schema(
 ProductSchema.methods.toJSON = function () {
     var obj = this.toObject();
     delete obj.__v
+    delete obj.createAt
+    delete obj.updatedAt
     return obj;
 }
 

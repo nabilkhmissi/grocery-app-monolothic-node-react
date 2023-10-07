@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { findProducts } from "../services/products.service";
 import { Product } from "../models/models";
+import ProductComponent from "../components/product";
 
 export default function Products() {
     const [products, setProducts] = useState<Product[]>();
@@ -12,17 +13,11 @@ export default function Products() {
         getProducts()
     }, [])
     return (
-        <div>
+        <div className="container">
             <h1>Products</h1>
             <div className="products-grid">
                 {products && products.map(p => (
-                    <div className="product-card" key={p.name}>
-                        <h3>{p.name}</h3>
-                        <p>{p.desc}</p>
-                        <h2>$ {p.price}</h2>
-                        <h3>{p.available ? 'en stock' : 'out of stock'}</h3>
-                        <p>{p.suplier}</p>
-                    </div>
+                    <ProductComponent product={p} />
                 ))}
             </div>
         </div>

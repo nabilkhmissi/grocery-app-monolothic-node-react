@@ -6,6 +6,10 @@
     font-size: 18px;
 }
 
+body {
+    background-color: #ececec;
+}
+
 .active {
     text-decoration: underline;
 }
@@ -32,6 +36,11 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
+    background-color: white;
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.063);
+    position: sticky;
+    top: 0;
 }
 
 .nav-links {
@@ -43,6 +52,7 @@ a {
 .nav-actions {
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
 
 button {
@@ -74,6 +84,7 @@ input {
     max-width: 500px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.23);
     margin: 3rem auto;
+    background-color: white;
 }
 
 .form-group {
@@ -88,7 +99,6 @@ input {
 }
 
 .products-grid {
-    background-color: rgb(236, 244, 251);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     gap: 1rem;
@@ -101,11 +111,36 @@ input {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    justify-content: space-between;
 }
+
+.product-image {
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+}
+
+.product-card .details {
+    background-color: white;
+}
+
 
 .hero {
     background-image: url("../public/images/eco-friendly-reusable-shopping-bag-260nw-590746682.webp");
     height: 100vh;
     background-size: cover;
     background-position: center;
+}
+
+.container {
+    padding: 0 5%;
+}
+
+.error-component {
+    padding: 1rem;
+    border: 1px solid black;
+    margin-bottom: 1rem;
 }

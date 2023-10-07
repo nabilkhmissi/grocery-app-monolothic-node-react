@@ -1,20 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/headers";
+import AppContext from "../context/app.context";
 import { useState } from "react";
-import { Customer } from "../models/models";
 
 export default function Layout() {
-
-    const [authUser, setAuthUser] = useState<Customer | null>(null);
-
-    function handleLogout() {
-        setAuthUser(null)
-    }
-
+    const [authUser, setAuthUser] = useState(null);
     return (
-        <>
-            <Header authUser={authUser} logout={handleLogout} />
-            <Outlet context={[authUser, setAuthUser]} />
-        </>
+        <AppContext.Provider value={{ authUser, setAuthUser }}>
+            <Header />
+            <Outlet />
+        </AppContext.Provider>
     )
 }

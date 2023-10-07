@@ -10,7 +10,8 @@ export type Product = {
     unit: number,
     price: number,
     available: boolean,
-    suplier: string
+    suplier: string,
+    image: string
 }
 
 export type ApiResponse = {
