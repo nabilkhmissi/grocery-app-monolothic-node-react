@@ -17,9 +17,8 @@ const login = async (req, res, next) => {
         const { _id, name } = customer;
         const signature = generate_signature({ _id, name, email });
 
-        res.status(200).send({ message: "authenticated succesfully", data: signature })
+        res.status(200).send({ message: "authenticated succesfully", data: { token: signature, customer } })
     } catch (error) {
-        console.log(error)
         next(error)
     }
 }

@@ -4,7 +4,6 @@ import { ApiResponse } from "../models/models";
 export async function findProducts() {
 
     const response: ApiResponse = await axios.get("http://localhost:3000/products");
-    console.log(response)
     return response.data.data;
 }
 

@@ -5,6 +5,7 @@ export type Customer = {
 }
 
 export type Product = {
+    _id: string,
     name: string,
     desc: string,
     unit: number,

@@ -5,6 +5,7 @@ import ProductComponent from "../components/product";
 
 export default function Products() {
     const [products, setProducts] = useState<Product[]>();
+
     useEffect(() => {
         async function getProducts() {
             const data = await findProducts();
@@ -17,7 +18,7 @@ export default function Products() {
             <h1>Products</h1>
             <div className="products-grid">
                 {products && products.map(p => (
-                    <ProductComponent product={p} />
+                    <ProductComponent product={p} key={p._id} />
                 ))}
             </div>
         </div>

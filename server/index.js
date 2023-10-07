@@ -10,7 +10,6 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 expressApp(app)
-app.use(errorHandler)
 db_init()
 
 
