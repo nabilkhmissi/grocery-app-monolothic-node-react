@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../services/auth.service";
 import Error from "../components/error";
 import AuthContext from "../context/auth.context";
+import CartContext from "../context/cart.context";
+import { loadCart } from "../services/customer.service";
 
 export default function Login() {
 
@@ -10,6 +12,7 @@ export default function Login() {
     const [error, setError] = useState<string | null>(null);
     const [state, setState] = useState<string>("idle");
     const { authUser, setAuthUser } = useContext(AuthContext);
+    const { cart, setCart } = useContext(CartContext);
 
     const navigate = useNavigate();
 
@@ -32,7 +35,11 @@ export default function Login() {
         setError(null)
         try {
             const response = await login(form.email, form.password);
-            handleLogin(response.data.data)
+            handleLogin(response.data.data);
+            const cart_response = await loadCart();
+            const cart = cart_response.data.cart;
+            setCart(cart)
+            navigate("/");
         } catch (error) {
             setError(error.response.data.message)
         } finally {
@@ -43,7 +50,6 @@ export default function Login() {
     function handleLogin(response: any) {
         localStorage.setItem("grocery_app_user", JSON.stringify(response));
         setAuthUser(response);
-        navigate("/")
     }
 
     return (

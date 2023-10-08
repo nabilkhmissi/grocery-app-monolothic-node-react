@@ -28,7 +28,7 @@ export default function Header({ handleCartBar }) {
                 </>
                 }
                 {authUser && <button onClick={() => navigate('/profile')}>Auth user</button>}
-                <button onClick={handleCartBar} className="header-cart">Cart <span className="cart-count">{cart.length}</span></button>
+                {authUser && <button onClick={handleCartBar} className="header-cart">Cart <span className="cart-count">{cart.length}</span></button>}
 
                 {authUser && <button onClick={handleLogout}>Logout</button>}
             </div>

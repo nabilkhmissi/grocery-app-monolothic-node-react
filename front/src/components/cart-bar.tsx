@@ -4,10 +4,10 @@ import CartItem from "./cart-item";
 
 export default function CartBar({ isOpen }: { isOpen: boolean }) {
 
-    const { cart } = useContext(CartContext);
+    const { cart, setCart } = useContext(CartContext);
 
     return (
-        <div className="cart-bar" style={isOpen ? { translate: '100% 0' } : { translate: '0 0' }}>
+        <div className="cart-bar" style={isOpen ? { translate: '0 0' } : { translate: '100% 0' }}>
             <ul>
                 {cart.map(item => {
                     return (

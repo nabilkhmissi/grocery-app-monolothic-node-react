@@ -7,6 +7,7 @@ import { loadCart } from "../services/customer.service";
 import CartBar from "../components/cart-bar";
 
 export default function Layout() {
+    const [isOpen, setIsOpen] = useState(false);
     const [authUser, setAuthUser] = useState(null);
     const [cart, setCart] = useState([])
     useEffect(() => {
@@ -27,7 +28,6 @@ export default function Layout() {
         setCart(cart)
     }
 
-    const [isOpen, setIsOpen] = useState(false);
 
     function handleCartBar() {
         setIsOpen(!isOpen)
